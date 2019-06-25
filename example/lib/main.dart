@@ -72,7 +72,7 @@ class _MyAppState extends State<MyApp> {
     var targetFileName = "example-pdf";
 
     var generatedPdfFile = await FlutterHtmlToPdf.convertFromHtmlContent(
-        htmlContent, targetPath, targetFileName);
+        htmlContent, targetPath, targetFileName, 10000);
     generatedPdfFilePath = generatedPdfFile.path;
   }
 

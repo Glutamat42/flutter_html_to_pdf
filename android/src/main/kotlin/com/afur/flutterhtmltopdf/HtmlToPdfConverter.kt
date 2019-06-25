@@ -17,7 +17,7 @@ class HtmlToPdfConverter {
         fun onFailure()
     }
 
-    fun convert(filePath: String, activity: Activity, callback: Callback) {
+    fun convert(filePath: String, activity: Activity, callback: Callback, pageLength: Int) {
         val webView = WebView(activity.applicationContext)
         val htmlContent = File(filePath).readText(Charsets.UTF_8)
 
@@ -26,17 +26,17 @@ class HtmlToPdfConverter {
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
-                createPdfFromWebView(webView, activity, callback)
+                createPdfFromWebView(webView, activity, callback, pageLength)
             }
         }
     }
 
-    fun createPdfFromWebView(webView: WebView, activity: Activity, callback: Callback) {
+    fun createPdfFromWebView(webView: WebView, activity: Activity, callback: Callback, pageLength: Int) {
         val path = activity.applicationContext.filesDir
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 
             val attributes = PrintAttributes.Builder()
-                    .setMediaSize(PrintAttributes.MediaSize("ENDLESS_THERMAL", "ENDLESS_THERMAL", 1889, 14200))
+                    .setMediaSize(PrintAttributes.MediaSize("ENDLESS_THERMAL", "ENDLESS_THERMAL", 1889, pageLength))
                     .setResolution(PrintAttributes.Resolution("pdf", "pdf", 600, 600))
                     .setMinMargins(PrintAttributes.Margins.NO_MARGINS).build()
 

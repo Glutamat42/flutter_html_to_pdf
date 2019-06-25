@@ -26,6 +26,7 @@ class FlutterHtmlToPdfPlugin(private val registrar: Registrar) : MethodCallHandl
 
     private fun convertHtmlToPdf(call: MethodCall, result: Result) {
         val htmlFilePath = call.argument<String>("htmlFilePath")
+        val paageLength: Int = call.argument<Int>("pageLength")!!
 
         HtmlToPdfConverter().convert(htmlFilePath!!, registrar.activity(), object : HtmlToPdfConverter.Callback {
             override fun onSuccess(filePath: String) {
@@ -35,7 +36,7 @@ class FlutterHtmlToPdfPlugin(private val registrar: Registrar) : MethodCallHandl
             override fun onFailure() {
                 result.error("ERROR", "Unable to convert html to pdf document!", "")
             }
-        })
+        }, paageLength)
     }
 }
 
